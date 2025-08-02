@@ -1,10 +1,9 @@
 package com.estudos.entity;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 
 import com.estudos.enums.Cargo;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")

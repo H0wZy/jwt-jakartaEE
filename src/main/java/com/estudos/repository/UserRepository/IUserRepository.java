@@ -15,6 +15,8 @@ public interface IUserRepository {
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByUsernameOrEmail(String usernameOrEmail);
+
     List<User> findAll();
 
     void delete(User user);

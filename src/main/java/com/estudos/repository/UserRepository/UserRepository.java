@@ -3,6 +3,7 @@ package com.estudos.repository.UserRepository;
 import com.estudos.entity.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
@@ -51,30 +52,51 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        User user = entityManager.find(User.class, id);
-        return Optional.ofNullable(user);
+    public Optional<User> findByUsernameOrEmail(String usernameOrEmail) {
+        try {
+            User user = entityManager.createQuery("select u from User u where  u.username = :input or u.email = :input", User.class).setParameter("input", usernameOrEmail).getSingleResult();
+            return Optional.of(user);
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        try {
+            User user = entityManager.createQuery("SELECT u FROM User u where u.username = :username", User.class).setParameter("username", username).getSingleResult();
+            return Optional.of(user);
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        try {
+            User user = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class).setParameter("email", email).getSingleResult();
+            return Optional.of(user);
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
-
 
     @Override
     public boolean existsByUsername(String username) {
-        return false;
+        Long count = entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.username = :username", Long.class).setParameter("username", username).getSingleResult();
+        return count > 0;
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        return false;
+        Long count = entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email", Long.class).setParameter("email", email).getSingleResult();
+        return count > 0;
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        User user = entityManager.find(User.class, id);
+        return Optional.ofNullable(user);
     }
 
     @Override
