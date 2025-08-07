@@ -10,33 +10,15 @@
     <title>Login</title>
     <meta content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- ✅ CORREÇÃO: Caminho correto do CSS -->
+    <!-- CSS atualizado com design clean -->
     <h:outputStylesheet library="css" name="login.css"/>
-
-    <script type="">
-        function addFocusEffect(inputId) {
-            const container = document.querySelector('#' + inputId).closest('.input-group');
-            if (container) {
-                const inputContainer = container.querySelector('.input-container');
-                inputContainer.classList.add('focused');
-            }
-        }
-
-        function removeFocusEffect(inputId) {
-            const container = document.querySelector('#' + inputId).closest('.input-group');
-            if (container) {
-                const inputContainer = container.querySelector('.input-container');
-                inputContainer.classList.remove('focused');
-            }
-        }
-    </script>
 </h:head>
 
 <h:body>
     <div class="main-container">
         <div class="form-section">
             <h1 class="login-title">
-                Faça o seu login
+                Faça seu login
                 <span class="gradient-dot"></span>
             </h1>
 
@@ -50,40 +32,34 @@
 
                 <!-- Campo Email -->
                 <div class="input-group">
-                    <label class="input-label" for="email">email</label>
-                    <div class="input-blur-bg"></div>
+                    <label class="input-label" for="email">Email / Nome de usuário</label>
                     <div class="input-container">
                         <p:inputText id="email"
                                      value="#{loginBean.usernameOrEmail}"
                                      styleClass="auth-input"
                                      required="true"
-                                     requiredMessage="Email é obrigatório"
-                                     onfocus="addFocusEffect('email')"
-                                     onblur="removeFocusEffect('email')"/>
+                                     requiredMessage="Email é obrigatório"/>
                     </div>
-                    <p:message for="email" display="text"/>
+                    <!--                    <p:message for="email" display="text"/>-->
                 </div>
 
                 <!-- Campo Senha -->
                 <div class="input-group">
-                    <label class="input-label" for="password">senha</label>
-                    <div class="input-blur-bg"></div>
+                    <label class="input-label" for="password">Senha</label>
                     <div class="input-container">
                         <p:password id="password"
                                     value="#{loginBean.password}"
                                     styleClass="auth-input"
                                     required="true"
-                                    requiredMessage="Senha é obrigatória"
-                                    onfocus="addFocusEffect('password')"
-                                    onblur="removeFocusEffect('password')"/>
+                                    requiredMessage="Senha é obrigatória"/>
                     </div>
-                    <p:message for="password" display="text"/>
+                    <!--                    <p:message for="password" display="text"/>-->
+                    <!-- Link esqueci senha -->
+                    <h:link value="Esqueci minha senha"
+                            styleClass="forgot-password"
+                            outcome="register"/>
                 </div>
 
-                <!-- Link esqueci senha -->
-                <h:link value="esqueci minha senha"
-                        styleClass="forgot-password"
-                        outcome="#"/>
 
                 <!-- Botão de login -->
                 <p:commandButton value="Entrar"
@@ -93,13 +69,13 @@
                                  process="@form"/>
 
                 <!-- Link para registro -->
-                <h:link value="ainda não tenho uma conta"
+                <h:link value="Não tenho uma conta ainda"
                         styleClass="register-link"
-                        outcome="index"/>
+                        outcome="register"/>
             </h:form>
         </div>
 
-        <!-- ✅ CORREÇÃO: Imagem direto no XHTML -->
+        <!-- Seção da imagem de fundo -->
         <div class="picture-section">
             <h:graphicImage library="img"
                             name="bg.jpg"

@@ -1,282 +1,265 @@
-/* ========================================
-   CSS Atualizado para webapp/resources/css/login.css
-   ======================================== */
+/* ===================================================================
+   CSS Atualizado para Login (login.css) - Baseado no Design do Register
+   Design Moderno e Clean
+   =================================================================== */
 
+/* ========================================
+   1. ESTILOS GLOBAIS E FUNDO
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom right, #18181b, #27272a);
+    background-color: #0c0a09;
+    color: #f2f2f2;
     overflow: hidden;
 }
 
-/* Container principal */
+/* ========================================
+   2. LAYOUT PRINCIPAL (CARD)
+   ======================================== */
 .main-container {
     display: flex;
-    width: 83.333333%; /* w-5/6 */
-    background-color: #09090b; /* bg-zinc-950 */
-    border-radius: 1.5rem; /* rounded-3xl */
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 950px;
+    height: 90vh;
+    max-height: 720px;
+    background-color: #181818;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.4);
 }
 
-/* Seção do formulário */
 .form-section {
+    width: 100%;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
-    padding: 0 2.5rem 2.5rem; /* px-10 pb-10 */
-    color: white;
-    flex-basis: 100%; /* basis-full */
 }
 
-.login-label {
-    margin: 3rem 0; /* my-12 */
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem; /* text-3xl */
-    line-height: 1.50rem;
-    font-weight: 500; /* font-bold */
-    color: white;
+.picture-section {
+    display: none;
+    width: 50%;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 24px 24px 0;
+}
+
+/* ========================================
+   3. ESTRUTURA DO FORMULÁRIO
+   ======================================== */
+.login-form {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    gap: 1.5rem;
 }
 
-/* Título */
+/* ========================================
+   4. TEXTOS E TÍTULOS
+   ======================================== */
 .login-title {
-    margin: 3rem 0; /* my-12 */
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.875rem; /* text-3xl */
-    line-height: 2.25rem;
-    font-weight: 700; /* font-bold */
-    color: white;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    flex-shrink: 0;
 }
 
 .gradient-dot {
     display: inline-block;
-    background: linear-gradient(to top right, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    width: 0.75rem; /* w-3 */
-    height: 0.75rem; /* h-3 */
-    border-radius: 50%; /* rounded-full */
-}
-
-/* Formulário */
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* gap-6 */
-    color: #9ca3af; /* text-gray-400 */
-}
-
-/* Grupo de input com efeito especial */
-.input-group {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem; /* espaço entre label, input e mensagem */
-    margin-bottom: 1rem; /* espaçamento entre os grupos */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #818cf8, #c084fc, #f472b6);
 }
 
 .input-label {
-    margin-bottom: 0.25rem;
+    display: block;
     font-size: 0.875rem;
-    color: #9ca3af;
     font-weight: 500;
-    z-index: 1;
+    color: #a1a1aa;
+    margin-bottom: 0.5rem;
 }
 
-/* Efeito blur de fundo */
-.input-blur-bg {
-    position: absolute;
-    top: 1.5rem;
-    left: 0;
-    height: 2.5rem; /* h-10 */
-    width: 100%;
-    background: linear-gradient(to top right, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    border-radius: 0.5rem;
-    filter: blur(12px);
-    opacity: 0;
-    transition: opacity 0.3s ease-in;
+/* ========================================
+   5. COMPONENTES DE INPUT
+   ======================================== */
+.input-group {
+    display: flex;
+    flex-direction: column; /* Organiza os itens (label, input, link) em coluna */
 }
 
-/* Container do input com gradient border */
 .input-container {
     position: relative;
-    background: none;
-    padding: 1px;
-    border-radius: 0.5rem;
-    transition: background 0.3s ease;
 }
 
-.input-container.focused {
-    background: linear-gradient(to top right, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+/* Removendo efeitos de blur - design clean como register */
+.input-blur-bg {
+    display: none;
 }
 
-/* Input styling */
 .auth-input {
-    width: 100%;
-    height: 2.5rem; /* h-10 */
-    padding: 0.5rem; /* p-2 */
-    border-radius: 0.5rem;
-    outline: none;
-    appearance: none;
-    background-color: #27272a; /* bg-zinc-800 */
-    border: none;
-    color: white;
-    font-size: 1rem;
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 1rem !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    background-color: rgba(57, 57, 57, 0.34) !important;
+    color: #cecece !important;
+    transition: box-shadow 0.2s ease !important;
+    margin: 0 !important;
 }
 
 .auth-input::placeholder {
-    color: #6b7280;
+    color: #6b7280 !important;
 }
 
 .auth-input:focus {
-    outline: none;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35) !important;
 }
 
-/* Mostrar blur quando input estiver focado */
-.input-group:focus-within .input-blur-bg {
-    opacity: 1;
-}
-
-.input-group:focus-within .input-container {
-    background: linear-gradient(to top right, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-}
-
-/* Links */
-.forgot-password {
-    font-size: 0.875rem; /* text-sm */
-    text-align: right;
-    text-decoration: underline;
-    cursor: pointer;
-    color: #9ca3af;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #C850C0;
-}
-
-/* Botão principal */
+/* ========================================
+   6. BOTÕES E LINKS (AÇÕES)
+   ======================================== */
 .login-btn {
-    background: linear-gradient(to top right, #4158D0 0%, #C850C0 46%, #FFCC70 100%) !important;
-    color: white !important;
-    font-weight: 700 !important;
-    height: 2.5rem !important; /* h-10 */
-    border-radius: 0.5rem !important;
+    width: 100% !important;
+    height: 44px !important;
     border: none !important;
-    cursor: pointer !important;
+    border-radius: 8px !important;
+    background: linear-gradient(45deg, #6d28d9, #a855f7) !important;
+    color: white !important;
     font-size: 1rem !important;
-    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    margin-top: 0.5rem;
 }
 
 .login-btn:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 10px 25px rgba(65, 88, 208, 0.4) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.3);
 }
 
-/* Link de registro */
+.forgot-password {
+    align-self: flex-end;   /* Alinha este item específico à direita do container */
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-top: 1rem;     /* Adiciona um pequeno espaço acima do link */
+}
+
+.forgot-password:hover {
+    color: #c084fc;
+}
+
 .register-link {
-    font-size: 0.875rem; /* text-sm */
+    display: block;
     text-align: center;
-    text-decoration: underline;
-    cursor: pointer;
-    color: #9ca3af;
-    transition: color 0.3s ease;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .register-link:hover {
-    color: #C850C0;
+    color: #c084fc;
 }
 
-/* ✅ SEÇÃO DA IMAGEM - ATUALIZADA */
-.picture-section {
-    width: 0;
-    position: relative;
-    border-radius: 0 1.5rem 1.5rem 0; /* rounded-r-3xl */
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-/* ✅ ESTILO PARA A IMAGEM JSF */
-.background-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    opacity: 0.7 !important;
-    display: block !important;
-}
-
-/* Overlay escuro sobre a imagem */
-.picture-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg,
-    rgba(9, 9, 11, 0.3) 0%,
-    rgba(9, 9, 11, 0.7) 100%);
-    pointer-events: none;
-}
-
-/* Mensagens de erro/sucesso */
+/* ========================================
+   7. MENSAGENS E ALERTAS
+   ======================================== */
 .alert {
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
     margin-bottom: 1rem;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.875rem;
+    text-align: center;
 }
 
 .alert-error {
-    background: rgba(239, 68, 68, 0.15);
+    background-color: rgba(239, 68, 68, 0.1);
     color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .alert-success {
-    background: rgba(34, 197, 94, 0.15);
+    background-color: rgba(74, 222, 128, 0.1);
     color: #4ade80;
-    border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 /* Mensagens de validação PrimeFaces */
 .ui-message {
-    background: rgba(239, 68, 68, 0.15) !important;
+    background: rgba(239, 68, 68, 0.1) !important;
     color: #f87171 !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
-    border-radius: 0.5rem !important;
+    border: none !important;
+    border-radius: 6px !important;
     padding: 0.5rem !important;
     margin-top: 0.5rem !important;
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
 }
 
-/* Responsive Design */
-@media (min-width: 768px) {
-    .main-container {
-        width: 850px; /* md:w-[850px] */
-    }
+.ui-message-error-detail {
+    font-size: 0.8rem !important;
+    color: #f87171 !important;
+    margin-top: 0.35rem !important;
+    display: block;
 }
 
+.ui-icon.ui-icon-close {
+    display: none !important;
+}
+
+/* ========================================
+   8. DESIGN RESPONSIVO
+   ======================================== */
 @media (min-width: 1024px) {
     .form-section {
-        flex-basis: 41.666667%; /* lg:basis-5/12 */
+        width: 50%;
     }
 
     .picture-section {
-        width: 58.333333%; /* lg:w-7/12 */
+        display: block;
     }
+}
+
+/* ========================================
+   9. REMOÇÃO DE ESTILOS ANTIGOS
+   ======================================== */
+
+/* Removendo classes antigas que não são mais necessárias */
+.input-container.focused {
+    background: none !important;
+}
+
+/* Script functions ainda funcionam, mas sem efeito visual */
+.input-group:focus-within .input-blur-bg {
+    opacity: 0;
+}
+
+.input-group:focus-within .input-container {
+    background: none;
 }
