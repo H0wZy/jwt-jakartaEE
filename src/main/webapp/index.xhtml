@@ -2,111 +2,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="jakarta.faces.html">
 
 <h:head>
-    <title>Criar Conta</title>
-    <meta content=""/>
+    <title>Página Inicial</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- ✅ CORREÇÃO: Caminho correto do CSS -->
-    <h:outputStylesheet library="css" name="index.css" />
-
+    <h:outputStylesheet library="css" name="index.css"/>
 </h:head>
 
 <h:body>
-    <div class="main-container">
-        <div class="form-section">
-            <h1 class="login-title">
-                Crie sua conta
-                <span class="gradient-dot"></span>
-            </h1>
+    <div class="welcome-card">
+        <div class="welcome-content">
+            <div class="welcome-header">
+                <p class="welcome-subtitle">Bem-vindo(a)</p>
+                <h1 class="welcome-title">
+                    Vamos começar?
+                    <span class="gradient-dot"></span>
+                </h1>
+            </div>
 
-            <h:form id="registerForm" styleClass="login-form">
-                <h:panelGroup rendered="#{registerBean.showMessage}">
-                    <div class="alert #{registerBean.success ? 'alert-success' : 'alert-error'}">
-                        #{registerBean.message}
-                    </div>
-                </h:panelGroup>
-
-                <div class="form-inputs-wrapper">
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:username">Nome de usuário</label>
-                        <div class="input-container">
-                            <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="username"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:email">Email</label>
-                        <div class="input-container">
-                            <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="email"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:firstName">Nome</label>
-                        <div class="input-container">
-                            <p:inputText id="firstName" value="#{registerBean.firstName}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="firstName"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:lastName">Sobrenome</label>
-                        <div class="input-container">
-                            <p:inputText id="lastName" value="#{registerBean.lastName}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="lastName"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:cargo">Cargo</label>
-                        <div class="input-container">
-                            <p:selectOneMenu id="cargo"
-                                             value="#{registerBean.cargo}"
-                                             styleClass="auth-input"
-                                             required="true"
-                                             appendTo="@(body)"> <f:selectItem itemLabel="Selecione um cargo..." itemValue="" noSelectionOption="true"/>
-                                <f:selectItem itemLabel="Operacional" itemValue="OPERATIONAL"/>
-                                <f:selectItem itemLabel="Moderador" itemValue="MOD"/>
-                                <f:selectItem itemLabel="Administrador" itemValue="ADMIN"/>
-                            </p:selectOneMenu>
-                        </div>
-                        <p:message for="cargo"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:password">Senha</label>
-                        <div class="input-container">
-                            <p:password id="password" value="#{registerBean.password}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="password"/>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:confirmPassword">Confirmar senha</label>
-                        <div class="input-container">
-                            <p:password id="confirmPassword" value="#{registerBean.confirmPassword}" styleClass="auth-input" required="true"/>
-                        </div>
-                        <p:message for="confirmPassword"/>
-                    </div>
-                </div> <p:commandButton value="Criar conta"
-                                        action="#{registerBean.register}"
-                                        styleClass="login-btn"
-                                        update="@form"
-                                        process="@form"/>
-
-                <h:link value="Já tenho uma conta"
-                        styleClass="register-link"
-                        outcome="login"/>
-            </h:form>
+            <div class="welcome-actions">
+                <h:button value="Já tenho uma conta"
+                          styleClass="btn btn-primary"
+                          outcome="login"/>
+                <h:link value="Não tenho uma conta ainda"
+                        styleClass="link"
+                        outcome="register"/>
+            </div>
         </div>
-        <!-- ✅ CORREÇÃO: Imagem direto no XHTML -->
-        <div class="picture-section">
+
+        <div class="welcome-image-section">
             <h:graphicImage library="img"
                             name="bg.jpg"
                             styleClass="background-image"

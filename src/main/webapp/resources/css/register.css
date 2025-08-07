@@ -1,0 +1,323 @@
+/* ===================================================================
+   CSS para a Página de Registro (register.css)
+   Versão Final: Corrigida e Otimizada
+   =================================================================== */
+
+/* ========================================
+   1. ESTILOS GLOBAIS E FUNDO
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0c0a09;
+    color: #f2f2f2;
+    overflow: hidden;
+}
+
+/* ========================================
+   2. LAYOUT PRINCIPAL (CARD)
+   ======================================== */
+.main-container {
+    display: flex;
+    width: 90%;
+    max-width: 950px;
+    height: 90vh;
+    max-height: 720px;
+    background-color: #181818;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.4);
+}
+
+.form-section {
+    width: 100%;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.picture-section {
+    display: none;
+    width: 50%;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 24px 24px 0;
+}
+
+/* ========================================
+   3. ESTRUTURA DO FORMULÁRIO E SCROLL
+   ======================================== */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.form-inputs-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 1rem;
+    padding-left: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+/* ========================================
+   4. TEXTOS E TÍTULOS
+   ======================================== */
+.login-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.gradient-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #818cf8, #c084fc, #f472b6);
+}
+
+.input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #a1a1aa;
+    margin-bottom: 0.5rem;
+}
+
+/* ========================================
+   5. COMPONENTES DE INPUT
+   ======================================== */
+.input-group {
+    margin-bottom: 1.25rem;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.auth-input {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 1rem !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    transition: box-shadow 0.2s ease !important;
+    margin: 0 !important;
+}
+
+.auth-input.ui-inputfield {
+    background-color: rgba(57, 57, 57, 0.34) !important;
+    color: #cecece !important;
+}
+
+.input-group:focus-within .auth-input,
+.ui-selectonemenu.auth-input.ui-state-focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.35) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* --- Dropdown (p:selectOneMenu) --- */
+.ui-selectonemenu.auth-input {
+    display: flex !important;
+    align-items: center;
+    background-color: rgba(57, 57, 57, 0.34) !important;
+    margin: 0 !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+    color: #cecece !important;
+    font-size: 1rem;
+    font-weight: 500;
+    padding-left: 1rem;
+    width: 100%;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label.ui-state-disabled {
+    color: #6b7280 !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    width: 40px !important;
+    height: 100% !important;
+    background: transparent !important;
+    color: #52525b !important;
+    border-radius: 0 8px 8px 0 !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+    margin-top: -6px;
+}
+
+/* ✅ Painel do dropdown com largura fixa */
+body .ui-selectonemenu-panel {
+    background-color: #27272a !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
+    padding: 0.5rem !important;
+    margin-top: 0.25rem !important;
+    z-index: 1000 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+
+body .ui-selectonemenu-item {
+    color: #cecece !important;
+    background-color: #27272a !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    border-radius: 6px;
+    margin: 0.25rem;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+    width: auto !important;
+}
+
+body .ui-selectonemenu-item:hover,
+body .ui-selectonemenu-item.ui-state-highlight {
+    background-color: #6d28d9 !important;
+    color: #cecece !important;
+}
+
+/* ========================================
+   6. BOTÕES E LINKS (AÇÕES)
+   ======================================== */
+.login-btn {
+    width: 100% !important;
+    height: 44px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(45deg, #6d28d9, #a855f7) !important;
+    color: white !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    flex-shrink: 0;
+    margin-top: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.3);
+}
+
+.register-link {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.register-link:hover {
+    color: #c084fc;
+}
+
+/* ========================================
+   7. MENSAGENS E ALERTAS
+   ======================================== */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+
+.alert-success {
+    background-color: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+}
+
+.ui-message-error-detail {
+    font-size: 0.8rem !important;
+    color: #f87171 !important;
+    margin-top: 0.35rem !important;
+    display: block;
+}
+
+.ui-icon.ui-icon-close {
+    display: none !important;
+}
+
+/* ========================================
+   8. BARRA DE SCROLL INTELIGENTE E SUAVE
+   ======================================== */
+
+/* Define a largura e o espaçamento da barra */
+.form-inputs-wrapper::-webkit-scrollbar {
+    width: 12px; /* Um pouco mais largo para acomodar o padding */
+}
+
+/* A trilha por onde a barra corre (fica sempre invisível) */
+.form-inputs-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* A barra de rolagem em si */
+.form-inputs-wrapper::-webkit-scrollbar-thumb {
+    background-color: transparent; /* 1. Estado Padrão: Invisível */
+    border-radius: 6px;
+    /* Adiciona um "espaçamento" invisível ao redor da barra */
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+/* MÁGICA: Mostra a barra de forma sutil ao passar o mouse na ÁREA de scroll */
+.form-inputs-wrapper:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(106, 106, 114, 0.5); /* 2. Sutilmente visível */
+}
+
+/* Fica mais visível e sólida ao passar o mouse SOBRE a própria barra */
+.form-inputs-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(106, 106, 114, 0.8); /* 3. Mais sólida */
+}
+
+/* ========================================
+   9. DESIGN RESPONSIVO
+   ======================================== */
+@media (min-width: 1024px) {
+    .form-section {
+        width: 50%;
+    }
+
+    .picture-section {
+        display: block;
+    }
+}

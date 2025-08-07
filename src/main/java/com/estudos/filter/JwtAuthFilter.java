@@ -76,8 +76,10 @@ public class JwtAuthFilter extends HttpFilter {
         if ("GET".equals(method)) {
             if (requestURI.endsWith("/") ||                          // Página inicial
                     requestURI.endsWith("/index.xhtml") ||               // Registro
+                    requestURI.endsWith("/register.xhtml") ||               // Registro
                     requestURI.endsWith("/login.xhtml") ||               // Login
                     requestURI.contains("/faces/index.xhtml") ||         // Com /faces/
+                    requestURI.contains("/faces/register.xhtml") ||         // Com /faces/
                     requestURI.contains("/faces/login.xhtml")) {         // Com /faces/
                 return true;
             }
@@ -120,8 +122,10 @@ public class JwtAuthFilter extends HttpFilter {
         // 🔓 POST para formulários de registro/login JSF
         if ("POST".equals(method)) {
             return requestURI.endsWith("/index.xhtml") ||
+                    requestURI.endsWith("/register.xhtml") ||
                     requestURI.endsWith("/login.xhtml") ||
                     requestURI.contains("/faces/index.xhtml") ||
+                    requestURI.contains("/faces/register.xhtml") ||
                     requestURI.contains("/faces/login.xhtml");
         }
 
