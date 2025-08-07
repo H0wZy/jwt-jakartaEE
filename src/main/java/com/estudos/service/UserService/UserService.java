@@ -79,6 +79,7 @@ public class UserService implements IUserService {
 
     @Override
     public void updateLastLogin(Long userId) {
+        userRepository.updateLastLogin(userId);
 
     }
 }

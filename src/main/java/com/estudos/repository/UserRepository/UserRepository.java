@@ -103,4 +103,13 @@ public class UserRepository implements IUserRepository {
     public List<User> findByCargoAndIsUserDisabled(String cargo, boolean disabled) {
         return List.of();
     }
+
+    @Override
+    @Transactional
+    public void updateLastLogin(Long userId) {
+        entityManager.createQuery("UPDATE User u SET u.lastLoginAt = :now WHERE u.id = :id")
+                .setParameter("now", new Date())
+                .setParameter("id", userId)
+                .executeUpdate();
+    }
 }

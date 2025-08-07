@@ -28,4 +28,7 @@ public interface IUserRepository {
     boolean existsByEmail(String email);
 
     List<User> findByCargoAndIsUserDisabled(String cargo, boolean disabled);
+
+    void updateLastLogin(Long userId);
+
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Login</title>
+    <meta content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- ✅ CORREÇÃO: Caminho correto do CSS -->
+    <h:outputStylesheet library="css" name="login.css"/>
+
+    <script type="">
+        function addFocusEffect(inputId) {
+            const container = document.querySelector('#' + inputId).closest('.input-group');
+            if (container) {
+                const inputContainer = container.querySelector('.input-container');
+                inputContainer.classList.add('focused');
+            }
+        }
+
+        function removeFocusEffect(inputId) {
+            const container = document.querySelector('#' + inputId).closest('.input-group');
+            if (container) {
+                const inputContainer = container.querySelector('.input-container');
+                inputContainer.classList.remove('focused');
+            }
+        }
+    </script>
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <div class="form-section">
+            <h1 class="login-title">
+                Faça o seu login
+                <span class="gradient-dot"></span>
+            </h1>
+
+            <h:form id="loginForm" styleClass="login-form">
+                <!-- Mensagem de erro -->
+                <h:panelGroup rendered="#{loginBean.showMessage}">
+                    <div class="alert alert-error">
+                        #{loginBean.message}
+                    </div>
+                </h:panelGroup>
+
+                <!-- Campo Email -->
+                <div class="input-group">
+                    <label class="input-label" for="email">email</label>
+                    <div class="input-blur-bg"></div>
+                    <div class="input-container">
+                        <p:inputText id="email"
+                                     value="#{loginBean.usernameOrEmail}"
+                                     styleClass="auth-input"
+                                     required="true"
+                                     requiredMessage="Email é obrigatório"
+                                     onfocus="addFocusEffect('email')"
+                                     onblur="removeFocusEffect('email')"/>
+                    </div>
+                    <p:message for="email" display="text"/>
+                </div>
+
+                <!-- Campo Senha -->
+                <div class="input-group">
+                    <label class="input-label" for="password">senha</label>
+                    <div class="input-blur-bg"></div>
+                    <div class="input-container">
+                        <p:password id="password"
+                                    value="#{loginBean.password}"
+                                    styleClass="auth-input"
+                                    required="true"
+                                    requiredMessage="Senha é obrigatória"
+                                    onfocus="addFocusEffect('password')"
+                                    onblur="removeFocusEffect('password')"/>
+                    </div>
+                    <p:message for="password" display="text"/>
+                </div>
+
+                <!-- Link esqueci senha -->
+                <h:link value="esqueci minha senha"
+                        styleClass="forgot-password"
+                        outcome="#"/>
+
+                <!-- Botão de login -->
+                <p:commandButton value="Entrar"
+                                 action="#{loginBean.login}"
+                                 styleClass="login-btn"
+                                 update="loginForm"
+                                 process="@form"/>
+
+                <!-- Link para registro -->
+                <h:link value="ainda não tenho uma conta"
+                        styleClass="register-link"
+                        outcome="index"/>
+            </h:form>
+        </div>
+
+        <!-- ✅ CORREÇÃO: Imagem direto no XHTML -->
+        <div class="picture-section">
+            <h:graphicImage library="img"
+                            name="bg.jpg"
+                            styleClass="background-image"
+                            alt="Background"/>
+        </div>
+    </div>
+</h:body>
+</html>

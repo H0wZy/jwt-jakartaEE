@@ -1,0 +1,318 @@
+/* ========================================
+   CSS para a página de Registro (index.xhtml)
+   VERSÃO CORRIGIDA - Dropdown Escuro + Scroll Funcional
+   ======================================== */
+
+/* --- Reset & Padrões Globais --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0c0a09;
+    color: #f2f2f2;
+    overflow: hidden;
+}
+
+/* --- Container Principal --- */
+.main-container {
+    display: flex;
+    width: 90%;
+    max-width: 950px;
+    height: 90vh;
+    max-height: 700px;
+    background-color: #121212;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Seção do Formulário (Esquerda) --- */
+.form-section {
+    width: 100%;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Título e Cabeçalho --- */
+.login-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+.gradient-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #818cf8, #c084fc, #f472b6);
+}
+
+/* ✅ CORREÇÃO: Estrutura do Formulário com altura controlada */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 0; /* Força o cálculo correto da altura */
+    min-height: 0; /* Permite encolhimento */
+}
+
+/* ✅ CORREÇÃO: Wrapper dos inputs com scroll - altura calculada corretamente */
+.form-inputs-wrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+    margin-bottom: 1rem;
+    /* ✅ Altura máxima calculada dinamicamente */
+    max-height: calc(100% - 120px); /* Deixa espaço para botão e links */
+}
+
+/* --- Alertas (fora do scroll) --- */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+}
+.alert-success {
+    background-color: rgba(74, 222, 128, 0.1);
+    color: #4ade80;
+}
+
+/* --- Grupo de Input --- */
+.input-group {
+    margin-bottom: 1.25rem;
+    flex-shrink: 0; /* Impede compressão dos grupos */
+}
+.input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #a1a1aa;
+    margin-bottom: 0.5rem;
+}
+.input-container {
+    position: relative;
+}
+.auth-input {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 1rem !important;
+    background-color: #27272a !important;
+    border: 1px solid #3f3f46 !important;
+    border-radius: 8px !important;
+    color: #f2f2f2 !important;
+    font-size: 1rem !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+.input-group:focus-within .auth-input,
+.ui-selectonemenu.auth-input.ui-state-focus {
+    outline: none !important;
+    border-color: #818cf8 !important;
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25) !important;
+}
+
+/* ✅ CORREÇÃO: Botão e Links sempre visíveis (fora do scroll) */
+.login-btn {
+    width: 100% !important;
+    height: 44px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(45deg, #6d28d9, #a855f7) !important;
+    color: white !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    flex-shrink: 0;
+    margin-bottom: 1rem !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.login-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(129, 140, 248, 0.3) !important;
+}
+.register-link {
+    display: block;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+.register-link:hover {
+    color: #c084fc;
+}
+
+/* --- Mensagens de Validação --- */
+.ui-message-error-detail {
+    font-size: 0.8rem !important;
+    color: #f87171 !important;
+    margin-top: 0.35rem !important;
+    display: block;
+}
+.ui-icon.ui-icon-close {
+    display: none !important;
+}
+
+/* ✅ CORREÇÃO PRINCIPAL: Dropdown Escuro - Maior especificidade */
+.ui-selectonemenu.auth-input {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+}
+.ui-selectonemenu-label {
+    color: #f2f2f2 !important;
+    font-size: 1rem;
+    padding-left: 1rem;
+    width: 100%;
+}
+.ui-selectonemenu-label.ui-state-disabled {
+    color: #6b7280 !important;
+}
+.ui-selectonemenu-trigger {
+    width: 40px !important;
+    height: 100% !important;
+    border-left: 1px solid #3f3f46 !important;
+    background: transparent !important;
+    color: #a1a1aa !important;
+}
+.ui-selectonemenu-trigger .ui-icon {
+    margin-top: -6px;
+}
+
+/* ✅ DROPDOWN ESCURO - Estilos com máxima especificidade */
+body .ui-selectonemenu-panel,
+.ui-selectonemenu-panel.ui-widget.ui-widget-content,
+.ui-selectonemenu-panel.ui-corner-all {
+    background-color: #27272a !important;
+    border: 1px solid #3f3f46 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
+    padding: 0.5rem 0 !important;
+    margin-top: 0.25rem !important;
+    z-index: 1000 !important;
+}
+
+/* ✅ LISTA DE ITENS DO DROPDOWN - Escura */
+body .ui-selectonemenu-items,
+.ui-selectonemenu-items.ui-widget-content {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ✅ WRAPPER DOS ITENS - Scroll customizado */
+.ui-selectonemenu-items-wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: #818cf8 #27272a;
+}
+.ui-selectonemenu-items-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+.ui-selectonemenu-items-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.ui-selectonemenu-items-wrapper::-webkit-scrollbar-thumb {
+    background-color: #3f3f46;
+    border-radius: 10px;
+}
+
+/* ✅ ITENS INDIVIDUAIS - Estilo escuro */
+body .ui-selectonemenu-item,
+.ui-selectonemenu-item.ui-corner-all,
+body .ui-selectonemenu-list-item {
+    color: #d4d4d8 !important;
+    background-color: transparent !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* ✅ HOVER E SELECIONADO - Roxo */
+body .ui-selectonemenu-item:hover,
+body .ui-selectonemenu-item.ui-state-highlight,
+body .ui-selectonemenu-list-item:hover,
+.ui-selectonemenu-item.ui-state-hover {
+    background-color: #818cf8 !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* --- Seção da Imagem (Direita) --- */
+.picture-section {
+    width: 50%;
+    display: none;
+}
+.background-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0 24px 24px 0;
+}
+
+/* --- Design Responsivo --- */
+@media (min-width: 1024px) {
+    .form-section {
+        width: 50%;
+    }
+    .picture-section {
+        display: block;
+        width: 50%;
+    }
+}
+
+/* ✅ SCROLL PERSONALIZADO - Área dos inputs */
+.form-inputs-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+.form-inputs-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.form-inputs-wrapper::-webkit-scrollbar-thumb {
+    background-color: #3f3f46;
+    border-radius: 10px;
+}
+.form-inputs-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #52525b;
+}
+
+/* ✅ GARANTIA: Remove qualquer background branco restante */
+.ui-widget-content,
+.ui-corner-all,
+.ui-selectonemenu-panel * {
+    background-color: transparent !important;
+}
+
+/* ✅ OVERRIDE FINAL: Força tema escuro em qualquer elemento do dropdown */
+[id*="cargo_panel"] *,
+[id*="selectOneMenu"] * {
+    background-color: #27272a !important;
+    color: #d4d4d8 !important;
+}
+[id*="cargo_panel"] {
+    background-color: #27272a !important;
+    border: 1px solid #3f3f46 !important;
+}
