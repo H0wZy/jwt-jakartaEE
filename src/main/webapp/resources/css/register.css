@@ -111,11 +111,34 @@ body {
 /* ========================================
    5. COMPONENTES DE INPUT
    ======================================== */
+
+.row-double-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Rua maior, Número menor */
+    gap: 0.75rem; /* ~12px de espaçamento */
+    align-items: start;
+}
+
+.row-address {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr 0.7fr;
+    gap: clamp(0.5rem, 1.5vw, 1rem); /* responsivo: ~8px a 16px */
+    align-items: start;
+}
+
+/* Evita espaçamento duplo dentro do grid */
+.row-address .input-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
 .input-group {
     margin-bottom: 1.25rem;
     margin-left: 4px;
     margin-right: 4px;
 }
+
 
 .auth-input {
     width: 100% !important;
@@ -312,6 +335,19 @@ body .ui-selectonemenu-item.ui-state-highlight {
 /* ========================================
    9. DESIGN RESPONSIVO
    ======================================== */
+@media (max-width: 900px) {
+    .row-address {
+        grid-template-columns: 1fr 1fr; /* ex.: Rua + Bairro, Número vai pra linha de baixo */
+    }
+}
+
+@media (max-width: 600px) {
+    .row-address {
+        grid-template-columns: 1fr; /* empilha tudo */
+    }
+}
+
+
 @media (min-width: 1024px) {
     .form-section {
         width: 50%;

@@ -18,6 +18,7 @@ public class RegisterBean {
     private String email;
     private String firstName;
     private String lastName;
+    private String cep;
     private Cargo cargo;
     private String password;
     private String confirmPassword;
@@ -30,12 +31,12 @@ public class RegisterBean {
     private IAuthService authService;
 
     /**
-     * Método chamado quando usuário clica em "Registrar"
+     * Métodos chamados quando o usuário clicar em "Registrar"
      */
     public String register() {
         try {
             // ✅ Criar DTO usando seus campos
-            RegisterRequestDto request = new RegisterRequestDto(username, email, firstName, lastName, password, confirmPassword);
+            RegisterRequestDto request = new RegisterRequestDto(username, email, firstName, lastName, cep, cargo, password, confirmPassword);
 
             // ✅ Chamar SEU AuthService.register() - ele já faz tudo!
             ApiResponseDto<RegisterResponseDto> result = authService.register(request);
@@ -63,6 +64,7 @@ public class RegisterBean {
         email = null;
         firstName = null;
         lastName = null;
+        cep = null;
         cargo = null;
         password = null;
         confirmPassword = null;
@@ -110,6 +112,14 @@ public class RegisterBean {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public Cargo getCargo() {

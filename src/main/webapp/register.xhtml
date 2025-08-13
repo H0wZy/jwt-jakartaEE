@@ -31,41 +31,111 @@
                 </h:panelGroup>
 
                 <div class="form-inputs-wrapper">
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:username">Nome de usuário</label>
-                        <div class="input-container">
-                            <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input"
-                                         required="true"/>
+
+                        <div class="input-group">
+                            <label class="input-label" for="registerForm:username">Nome de usuário</label>
+                            <div class="input-container">
+                                <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="username"/>
                         </div>
-                        <p:message for="username"/>
+
+                        <div class="input-group">
+                            <label class="input-label" for="registerForm:email">Email</label>
+                            <div class="input-container">
+                                <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="email"/>
+                        </div>
+
+
+                    <div class="row-double-input">
+                        <div class="input-group">
+                            <label class="input-label" for="registerForm:firstName">Nome</label>
+                            <div class="input-container">
+                                <p:inputText id="firstName" value="#{registerBean.firstName}" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="firstName"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="registerForm:lastName">Sobrenome</label>
+                            <div class="input-container">
+                                <p:inputText id="lastName" value="#{registerBean.lastName}" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="lastName"/>
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:email">Email</label>
-                        <div class="input-container">
-                            <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input"
-                                         required="true"/>
+
+                    <div class="row-address">
+
+                        <div class="input-group">
+                            <label class="input-label" for="registerForm:cep">CEP</label>
+                            <div class="input-container">
+                                <p:inputText id="cep" value="#{registerBean.cep}" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="cep"/>
                         </div>
-                        <p:message for="email"/>
+
+                        <div class="input-group">
+                            <label class="input-label" for="#">Rua</label>
+                            <div>
+                                <p:inputText value="#" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="cep"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="#">Número</label>
+                            <div>
+                                <p:inputText value="#" styleClass="auth-input"
+                                             maxlength="5" required="true"/>
+                            </div>
+                            <p:message for="cep"/>
+                        </div>
+
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:firstName">Nome</label>
-                        <div class="input-container">
-                            <p:inputText id="firstName" value="#{registerBean.firstName}" styleClass="auth-input"
-                                         required="true"/>
+
+                    <div class="row-address">
+                        <div class="input-group">
+                            <label class="input-label" for="#">Bairro</label>
+                            <div>
+                                <p:inputText value="#" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="cep"/>
                         </div>
-                        <p:message for="firstName"/>
+
+                        <div class="input-group">
+                            <label class="input-label" for="#">Cidade</label>
+                            <div>
+                                <p:inputText value="#" styleClass="auth-input"
+                                             required="true"/>
+                            </div>
+                            <p:message for="cep"/>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="#">UF</label>
+                            <div>
+                                <p:inputText value="#" styleClass="auth-input"
+                                             maxlength="2" required="true"/>
+                            </div>
+                            <p:message for="cep"/>
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label" for="registerForm:lastName">Sobrenome</label>
-                        <div class="input-container">
-                            <p:inputText id="lastName" value="#{registerBean.lastName}" styleClass="auth-input"
-                                         required="true"/>
-                        </div>
-                        <p:message for="lastName"/>
-                    </div>
+
+
+
 
                     <div class="input-group">
                         <label class="input-label" for="registerForm:cargo">Cargo</label>
