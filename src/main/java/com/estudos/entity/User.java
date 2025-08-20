@@ -25,9 +25,30 @@ public class User {
     private byte[] hashPassword;
     @Column(name = "salt_password", nullable = false)
     private byte[] saltPassword;
+
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Cargo cargo;
+
+    @Column(name = "cep", nullable = false, length = 8)
+    private String cep;
+
+    @Column(name = "rua", nullable = false, length = 200)
+    private String rua;
+
+    @Column(name = "numero", nullable = false, length = 10)
+    private String numero;
+
+    @Column(name = "bairro", nullable = false, length = 100)
+    private String bairro;
+
+    @Column(name = "cidade", nullable = false, length = 100)
+    private String cidade;
+
+    @Column(name = "uf", nullable = false, length = 2)
+    private String uf;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
@@ -113,6 +134,55 @@ public class User {
         this.cargo = cargo;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -143,5 +213,10 @@ public class User {
 
     public void setUserDisabled(boolean userDisabled) {
         isUserDisabled = userDisabled;
+    }
+
+    public String getEnderecoCompleto() {
+        return String.format("%s, %s - %s, %s - %s",
+                rua, numero, bairro, cidade, uf);
     }
 }
