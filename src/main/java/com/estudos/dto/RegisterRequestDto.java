@@ -22,13 +22,32 @@ public record RegisterRequestDto(
         String lastName,
 
         @NotBlank(message = "CEP é obrigatório")
-        @Pattern(regexp = "\\d{8}", message = "CEP deve conter exatamente 8 dígitos")
+        @Pattern(regexp = "\\d{5}-?\\d{3}", message = "CEP deve estar no formato 00000-000 ou 00000000")
         String cep,
+
+        @NotBlank(message = "Rua é obrigatória")
+        @Size(max = 200, message = "Rua deve ter no máximo 200 caracteres")
+        String rua,
+
+        @NotBlank(message = "Número é obrigatório")
+        @Size(max = 10, message = "Número deve ter no máximo 10 caracteres")
+        String numero,
+
+        @NotBlank(message = "Bairro é obrigatório")
+        @Size(max = 100, message = "Bairro deve ter no máximo 100 caracteres")
+        String bairro,
+
+        @NotBlank(message = "Cidade é obrigatória")
+        @Size(max = 100, message = "Cidade deve ter no máximo 100 caracteres")
+        String cidade,
+
+        @NotBlank(message = "UF é obrigatória")
+        @Size(min = 2, max = 2, message = "UF deve ter exatamente 2 caracteres")
+        String uf,
 
         /* Enum deve ser @NotNull (não use @NotBlank em tipos não-String) */
         @NotNull(message = "Cargo é obrigatório")
         Cargo cargo,
-
 
         @NotBlank(message = "Senha é obrigatório")
         @Size(min = 8, message = "Senha deve ter no mínimo 8 caracteres")
@@ -39,4 +58,11 @@ public record RegisterRequestDto(
         String confirmPassword
 
 ) {
+    public String getEnderecoCompleto() {
+        return String.format("%s, %s - %s, %s - %s", rua, numero, bairro, cidade, uf);
+    }
+
+    public boolean passwordMatch() {
+        return password != null && password.equals(confirmPassword);
+    }
 }

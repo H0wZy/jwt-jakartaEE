@@ -3,15 +3,20 @@ package com.estudos.bean;
 import com.estudos.dto.RegisterRequestDto;
 import com.estudos.dto.RegisterResponseDto;
 import com.estudos.dto.ApiResponseDto;
+import com.estudos.dto.ViaCepResponseDto;
 import com.estudos.enums.Cargo;
 import com.estudos.service.AuthService.IAuthService;
+import com.estudos.service.ViaCepService.IViaCepService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 @RequestScoped
 public class RegisterBean {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
 
     // ✅ Campos para binding com o formulário XHTML
     private String username;
@@ -19,6 +24,13 @@ public class RegisterBean {
     private String firstName;
     private String lastName;
     private String cep;
+
+    private String rua;
+    private String numero;
+    private String bairro;
+    private String cidade;
+    private String uf;
+
     private Cargo cargo;
     private String password;
     private String confirmPassword;
@@ -26,17 +38,32 @@ public class RegisterBean {
     private boolean success;
     private boolean showMessage;
 
+    private boolean buscandoCep = false;
+    private boolean cepEncontrado = false;
+
     // ✅ Injetar SEU AuthService (não fazer HTTP!)
     @Inject
     private IAuthService authService;
+
+    @Inject
+    private IViaCepService viaCepService;
 
     /**
      * Métodos chamados quando o usuário clicar em "Registrar"
      */
     public String register() {
         try {
+
+            if (!password.equals(confirmPassword)) {
+                setErrorMessage("As senhas não coincidem");
+                return null;
+            }
+
             // ✅ Criar DTO usando seus campos
-            RegisterRequestDto request = new RegisterRequestDto(username, email, firstName, lastName, cep, cargo, password, confirmPassword);
+            RegisterRequestDto request = new RegisterRequestDto(
+                    username, email, firstName, lastName,
+                    cep, rua, numero, bairro, cidade, uf,
+                    cargo, password, confirmPassword);
 
             // ✅ Chamar SEU AuthService.register() - ele já faz tudo!
             ApiResponseDto<RegisterResponseDto> result = authService.register(request);
@@ -50,12 +77,53 @@ public class RegisterBean {
                 setErrorMessage(result.message());
             }
 
-        } catch (Exception e) {
+        } catch (Exception ex) {
             setErrorMessage("Erro interno. Tente novamente.");
-            e.printStackTrace(); // Para debug
+            logger.error("Erro interno. Tente novamente, {}", ex.getMessage(), ex);
         }
 
         return null;
+    }
+
+    public void buscarCep() {
+        try {
+            setBuscandoCep(true);
+            setCepEncontrado(false);
+            limparCamposEndereco();
+
+            if (cep == null || cep.trim().isEmpty()) {
+                return;
+            }
+
+            ApiResponseDto<ViaCepResponseDto> response = viaCepService.buscarEnderecoPorCep(cep);
+
+            if (response.success() && response.data() != null) {
+                ViaCepResponseDto endereco = response.data();
+
+                this.rua = endereco.logradouro();
+                this.bairro = endereco.bairro();
+                this.cidade = endereco.localidade();
+                this.uf = endereco.uf();
+
+                setCepEncontrado(true);
+                setSuccessMessage("Endereço encontrado com sucesso!");
+            } else {
+                setErrorMessage(response.message());
+                limparCamposEndereco();
+            }
+        } catch (Exception ex) {
+            setErrorMessage("Erro ao buscar CEP. Tente novamente.");
+            logger.error("Erro ao buscar CEP. Tente novamente, {}", ex.getMessage(), ex);
+        } finally {
+            setBuscandoCep(false);
+        }
+    }
+
+    private void limparCamposEndereco() {
+        this.rua = null;
+        this.bairro = null;
+        this.cidade = null;
+        this.uf = null;
     }
 
     // ✅ Métodos auxiliares para controle da UI
@@ -68,6 +136,8 @@ public class RegisterBean {
         cargo = null;
         password = null;
         confirmPassword = null;
+        cepEncontrado = false;
+        buscandoCep = false;
     }
 
     private void setSuccessMessage(String msg) {
@@ -120,6 +190,62 @@ public class RegisterBean {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public boolean isBuscandoCep() {
+        return buscandoCep;
+    }
+
+    public void setBuscandoCep(boolean buscandoCep) {
+        this.buscandoCep = buscandoCep;
+    }
+
+    public boolean isCepEncontrado() {
+        return cepEncontrado;
+    }
+
+    public void setCepEncontrado(boolean cepEncontrado) {
+        this.cepEncontrado = cepEncontrado;
     }
 
     public Cargo getCargo() {
