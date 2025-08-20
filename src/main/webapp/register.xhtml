@@ -32,23 +32,23 @@
 
                 <div class="form-inputs-wrapper">
 
-                        <div class="input-group">
-                            <label class="input-label" for="registerForm:username">Nome de usuário</label>
-                            <div class="input-container">
-                                <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input"
-                                             required="true"/>
-                            </div>
-                            <p:message for="username"/>
+                    <div class="input-group">
+                        <label class="input-label" for="registerForm:username">Nome de usuário</label>
+                        <div class="input-container">
+                            <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input"
+                                         required="true"/>
                         </div>
+                        <p:message for="username"/>
+                    </div>
 
-                        <div class="input-group">
-                            <label class="input-label" for="registerForm:email">Email</label>
-                            <div class="input-container">
-                                <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input"
-                                             required="true"/>
-                            </div>
-                            <p:message for="email"/>
+                    <div class="input-group">
+                        <label class="input-label" for="registerForm:email">Email</label>
+                        <div class="input-container">
+                            <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input"
+                                         required="true"/>
                         </div>
+                        <p:message for="email"/>
+                    </div>
 
 
                     <div class="row-double-input">
@@ -75,30 +75,46 @@
                     <div class="row-address">
 
                         <div class="input-group">
-                            <label class="input-label" for="registerForm:cep">CEP</label>
+                            <label class="input-label" for="registerForm:cep">
+                                CEP
+                                <h:outputText value="Buscando..."
+                                              rendered="#{registerBean.buscandoCep}"
+                                              style="font-size: 0.75rem; color: #a1a1aa"/>
+                            </label>
                             <div class="input-container">
-                                <p:inputText id="cep" value="#{registerBean.cep}" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="cep"
+                                             value="#{registerBean.cep}"
+                                             styleClass="auth-input"
+                                             required="true"
+                                             maxlength="9"
+                                             onkeyup="formatarCep(this)"
+                                             onblur="buscarCepAutomatico()"/>
                             </div>
                             <p:message for="cep"/>
                         </div>
 
                         <div class="input-group">
-                            <label class="input-label" for="#">Rua</label>
+                            <label class="input-label" for="registerForm:rua">Rua</label>
                             <div>
-                                <p:inputText value="#" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="rua"
+                                             value="#{registerBean.rua}"
+                                             styleClass="auth-input"
+                                             required="true"
+                                             readonly="#{registerBean.cepEncontrado}"/>
                             </div>
-                            <p:message for="cep"/>
+                            <p:message for="rua"/>
                         </div>
 
                         <div class="input-group">
-                            <label class="input-label" for="#">Número</label>
+                            <label class="input-label" for="registerForm:numero">Número</label>
                             <div>
-                                <p:inputText value="#" styleClass="auth-input"
-                                             maxlength="5" required="true"/>
+                                <p:inputText id="numero"
+                                             value="#{registerBean.numero}"
+                                             styleClass="auth-input"
+                                             maxlength="5"
+                                             required="true"/>
                             </div>
-                            <p:message for="cep"/>
+                            <p:message for="numero"/>
                         </div>
 
                     </div>
@@ -106,35 +122,42 @@
 
                     <div class="row-address">
                         <div class="input-group">
-                            <label class="input-label" for="#">Bairro</label>
+                            <label class="input-label" for="registerForm:bairro">Bairro</label>
                             <div>
-                                <p:inputText value="#" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="bairro"
+                                             value="#{registerBean.bairro}"
+                                             styleClass="auth-input"
+                                             required="true"
+                                             readonly="#{registerBean.cepEncontrado}"/>
                             </div>
                             <p:message for="cep"/>
                         </div>
 
                         <div class="input-group">
-                            <label class="input-label" for="#">Cidade</label>
+                            <label class="input-label" for="registerForm:cidade">Cidade</label>
                             <div>
-                                <p:inputText value="#" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="cidade"
+                                             value="#{registerBean.cidade}"
+                                             styleClass="auth-input"
+                                             required="true"
+                                             readonly="#{registerBean.cepEncontrado}"/>
                             </div>
-                            <p:message for="cep"/>
+                            <p:message for="cidade"/>
                         </div>
 
                         <div class="input-group">
-                            <label class="input-label" for="#">UF</label>
+                            <label class="input-label" for="registerForm:uf">UF</label>
                             <div>
-                                <p:inputText value="#" styleClass="auth-input"
-                                             maxlength="2" required="true"/>
+                                <p:inputText id="uf"
+                                             value="#{registerBean.uf}"
+                                             styleClass="auth-input"
+                                             maxlength="2"
+                                             required="true"
+                                             readonly="#{registerBean.cepEncontrado}"/>
                             </div>
-                            <p:message for="cep"/>
+                            <p:message for="uf"/>
                         </div>
                     </div>
-
-
-
 
 
                     <div class="input-group">
@@ -172,6 +195,12 @@
                         <p:message for="confirmPassword"/>
                     </div>
                 </div>
+
+                <p:commandButton id="buscarCepCommand"
+                                 action="#{registerBean.buscarCep}"
+                                 update="registerForm:rua registerForm:bairro registerForm:cidade registerForm:uf"
+                                 style="display: none"/>
+
                 <p:commandButton value="Criar conta"
                                  action="#{registerBean.register}"
                                  styleClass="login-btn"
@@ -183,7 +212,7 @@
                         outcome="login"/>
             </h:form>
         </div>
-        <!-- ✅ CORREÇÃO: Imagem direto no XHTML -->
+
         <div class="picture-section">
             <h:graphicImage library="img"
                             name="bg.jpg"
@@ -191,5 +220,37 @@
                             alt="Background"/>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function formatarCep(input) {
+            let cep = input.value.replace(/\D/g, '');
+            if (cep.length > 5) {
+                cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+            }
+            input.value = cep;
+        }
+
+        function buscarCepAutomatico() {
+            const cepInput = document.getElementById('registerForm:cep');
+            const cep = cepInput.value.replace(/\D/g, '')
+
+            if (cep.length === 8) {
+                document.getElementById('registerForm:buscarCepCommand').click();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const cepField = document.getElementById('registerForm:cep');
+            if (cepField) {
+                cepField.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        buscarCepAutomatico();
+                    }
+                });
+            }
+        });
+    </script>
+
 </h:body>
 </html>
