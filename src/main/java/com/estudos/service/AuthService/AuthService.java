@@ -1,20 +1,24 @@
 package com.estudos.service.AuthService;
 
+import com.estudos.bean.RegisterBean;
 import com.estudos.dto.*;
 import com.estudos.entity.User;
-import com.estudos.enums.Cargo;
 import com.estudos.repository.UserRepository.IUserRepository;
 import com.estudos.service.UserService.IUserService;
 import com.estudos.util.JwtHelper;
 import com.estudos.util.PasswordHelper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.Optional;
 
 @ApplicationScoped
 public class AuthService implements IAuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     @Inject
     private IUserService userService;
 
@@ -36,13 +40,7 @@ public class AuthService implements IAuthService {
                 return ApiResponseDto.error("Este email já está em uso", 409);
             }
 
-            // 3. Criar novo usuário
-            User newUser = new User();
-            newUser.setUsername(registerRequestDto.username());
-            newUser.setEmail(registerRequestDto.email());
-            newUser.setFirstName(registerRequestDto.firstName());
-            newUser.setLastName(registerRequestDto.lastName());
-            newUser.setCargo(Cargo.OPERATIONAL);
+            User newUser = buildUserFromDto(registerRequestDto);
 
             // 4. Salvar usuário
             User savedUser = userService.createUser(newUser, registerRequestDto.password());
@@ -62,6 +60,22 @@ public class AuthService implements IAuthService {
         } catch (Exception e) {
             return ApiResponseDto.error("Erro interno do servidor", 500);
         }
+    }
+
+    private User buildUserFromDto(RegisterRequestDto registerRequestDto) {
+        User newUser = new User();
+        newUser.setUsername(registerRequestDto.username());
+        newUser.setEmail(registerRequestDto.email());
+        newUser.setFirstName(registerRequestDto.firstName());
+        newUser.setLastName(registerRequestDto.lastName());
+        newUser.setCargo(registerRequestDto.cargo());
+        newUser.setCep(limparCep(registerRequestDto.cep()));
+        newUser.setRua(registerRequestDto.rua());
+        newUser.setNumero(registerRequestDto.numero());
+        newUser.setBairro(registerRequestDto.bairro());
+        newUser.setCidade(registerRequestDto.cidade());
+        newUser.setUf(registerRequestDto.uf().toUpperCase());
+        return newUser;
     }
 
     @Override
@@ -118,6 +132,7 @@ public class AuthService implements IAuthService {
             );
 
         } catch (Exception e) {
+            logger.error("Erro ao realizar login: {}", e.getMessage(), e);
             return ApiResponseDto.error("Erro interno do servidor", 500);
         }
     }
@@ -130,5 +145,12 @@ public class AuthService implements IAuthService {
     @Override
     public boolean validateToken(String token) {
         return jwtHelper.validateToken(token) && !jwtHelper.isTokenExpired(token);
+    }
+
+    private String limparCep(String cep) {
+        if (cep == null) {
+            return "";
+        }
+        return cep.replaceAll("\\D", "");
     }
 }
