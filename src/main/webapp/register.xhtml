@@ -10,9 +10,7 @@
     <title>Criar Conta</title>
     <meta content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- ✅ CORREÇÃO: Caminho correto do CSS -->
     <h:outputStylesheet library="css" name="register.css"/>
-
 </h:head>
 
 <h:body>
@@ -24,6 +22,7 @@
             </h1>
 
             <h:form id="registerForm" styleClass="login-form">
+                <!-- Mensagem de feedback global -->
                 <h:panelGroup rendered="#{registerBean.showMessage}">
                     <div class="alert #{registerBean.success ? 'alert-success' : 'alert-error'}">
                         #{registerBean.message}
@@ -31,135 +30,177 @@
                 </h:panelGroup>
 
                 <div class="form-inputs-wrapper">
-
+                    <!-- USERNAME com validação -->
                     <div class="input-group">
                         <label class="input-label" for="registerForm:username">Nome de usuário</label>
                         <div class="input-container">
-                            <p:inputText id="username" value="#{registerBean.username}" styleClass="auth-input"
-                                         required="true"/>
+                            <p:inputText id="username"
+                                         value="#{registerBean.username}"
+                                         styleClass="auth-input"
+                                         required="true">
+                                <p:ajax event="blur"
+                                        listener="#{registerBean.validateUsername}"
+                                        update="username-status"
+                                        process="@this"/>
+                            </p:inputText>
                         </div>
-                        <p:message for="username"/>
+                        <h:panelGroup id="username-status">
+                            <h:outputText value="❌ Use apenas letras, números e _ (3-50 caracteres)"
+                                          style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                          rendered="#{registerBean.usernameInvalid}"/>
+                        </h:panelGroup>
                     </div>
 
+                    <!-- EMAIL com validação -->
                     <div class="input-group">
                         <label class="input-label" for="registerForm:email">Email</label>
                         <div class="input-container">
-                            <p:inputText id="email" value="#{registerBean.email}" styleClass="auth-input"
-                                         required="true"/>
+                            <p:inputText id="email"
+                                         value="#{registerBean.email}"
+                                         styleClass="auth-input"
+                                         required="true">
+                                <p:ajax event="blur"
+                                        listener="#{registerBean.validateEmail}"
+                                        update="email-status"
+                                        process="@this"/>
+                            </p:inputText>
                         </div>
-                        <p:message for="email"/>
+                        <h:panelGroup id="email-status">
+                            <h:outputText value="❌ Digite um email válido (ex: usuario@exemplo.com)"
+                                          style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                          rendered="#{registerBean.emailInvalid}"/>
+                        </h:panelGroup>
                     </div>
 
-
+                    <!-- NOMES com validação -->
                     <div class="row-double-input">
                         <div class="input-group">
                             <label class="input-label" for="registerForm:firstName">Nome</label>
                             <div class="input-container">
-                                <p:inputText id="firstName" value="#{registerBean.firstName}" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="firstName"
+                                             value="#{registerBean.firstName}"
+                                             styleClass="auth-input"
+                                             required="true">
+                                    <p:ajax event="blur"
+                                            update="firstname-status"
+                                            process="@this"/>
+                                </p:inputText>
                             </div>
-                            <p:message for="firstName"/>
+                            <h:panelGroup id="firstname-status">
+                                <h:outputText value="❌ Apenas letras (2-50 caracteres)"
+                                              style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                              rendered="#{registerBean.firstNameInvalid}"/>
+                            </h:panelGroup>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label" for="registerForm:lastName">Sobrenome</label>
                             <div class="input-container">
-                                <p:inputText id="lastName" value="#{registerBean.lastName}" styleClass="auth-input"
-                                             required="true"/>
+                                <p:inputText id="lastName"
+                                             value="#{registerBean.lastName}"
+                                             styleClass="auth-input"
+                                             required="true">
+                                    <p:ajax event="blur"
+                                            update="lastname-status"
+                                            process="@this"/>
+                                </p:inputText>
                             </div>
-                            <p:message for="lastName"/>
+                            <h:panelGroup id="lastname-status">
+                                <h:outputText value="❌ Apenas letras (2-50 caracteres)"
+                                              style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                              rendered="#{registerBean.lastNameInvalid}"/>
+                            </h:panelGroup>
                         </div>
                     </div>
 
-
+                    <!-- ENDEREÇO com busca automática -->
                     <div class="row-address">
-
+                        <!-- CEP -->
                         <div class="input-group">
-                            <label class="input-label" for="registerForm:cep">
-                                CEP
-                                <h:outputText value="Buscando..."
-                                              rendered="#{registerBean.buscandoCep}"
-                                              style="font-size: 0.75rem; color: #a1a1aa"/>
-                            </label>
+                            <label class="input-label" for="registerForm:cep">CEP</label>
                             <div class="input-container">
                                 <p:inputText id="cep"
                                              value="#{registerBean.cep}"
                                              styleClass="auth-input"
                                              required="true"
-                                             maxlength="9"
-                                             onkeyup="formatarCep(this)"
-                                             onblur="buscarCepAutomatico()"/>
+                                             maxlength="9">
+                                    <p:ajax event="blur"
+                                            listener="#{registerBean.buscarCep}"
+                                            update="cep-status rua bairro cidade uf"
+                                            process="@this"/>
+                                </p:inputText>
                             </div>
-                            <p:message for="cep"/>
+                            <h:panelGroup id="cep-status">
+                                <h:outputText value="🔍 Buscando CEP..."
+                                              style="font-size: 0.6rem; color: #818cf8; display: block; margin-top: 0.3rem;"
+                                              rendered="#{registerBean.buscandoCep}"/>
+                                <h:outputText value="❌ CEP deve ter 8 dígitos (ex: 12345-678)"
+                                              style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                              rendered="#{registerBean.cepInvalid and not registerBean.buscandoCep}"/>
+                            </h:panelGroup>
                         </div>
 
+                        <!-- Rua -->
                         <div class="input-group">
                             <label class="input-label" for="registerForm:rua">Rua</label>
-                            <div>
+                            <div class="input-container">
                                 <p:inputText id="rua"
                                              value="#{registerBean.rua}"
                                              styleClass="auth-input"
-                                             required="true"
-                                             readonly="#{registerBean.cepEncontrado}"/>
+                                             required="true"/>
                             </div>
-                            <p:message for="rua"/>
                         </div>
 
+                        <!-- Número -->
                         <div class="input-group">
                             <label class="input-label" for="registerForm:numero">Número</label>
-                            <div>
+                            <div class="input-container">
                                 <p:inputText id="numero"
                                              value="#{registerBean.numero}"
                                              styleClass="auth-input"
-                                             maxlength="5"
+                                             maxlength="10"
                                              required="true"/>
                             </div>
-                            <p:message for="numero"/>
                         </div>
-
                     </div>
 
-
                     <div class="row-address">
+                        <!-- Bairro -->
                         <div class="input-group">
                             <label class="input-label" for="registerForm:bairro">Bairro</label>
-                            <div>
+                            <div class="input-container">
                                 <p:inputText id="bairro"
                                              value="#{registerBean.bairro}"
                                              styleClass="auth-input"
-                                             required="true"
-                                             readonly="#{registerBean.cepEncontrado}"/>
+                                             required="true"/>
                             </div>
-                            <p:message for="cep"/>
                         </div>
 
+                        <!-- Cidade -->
                         <div class="input-group">
                             <label class="input-label" for="registerForm:cidade">Cidade</label>
-                            <div>
+                            <div class="input-container">
                                 <p:inputText id="cidade"
                                              value="#{registerBean.cidade}"
                                              styleClass="auth-input"
-                                             required="true"
-                                             readonly="#{registerBean.cepEncontrado}"/>
+                                             required="true"/>
                             </div>
-                            <p:message for="cidade"/>
                         </div>
 
+                        <!-- UF -->
                         <div class="input-group">
                             <label class="input-label" for="registerForm:uf">UF</label>
-                            <div>
+                            <div class="input-container">
                                 <p:inputText id="uf"
                                              value="#{registerBean.uf}"
                                              styleClass="auth-input"
                                              maxlength="2"
-                                             required="true"
-                                             readonly="#{registerBean.cepEncontrado}"/>
+                                             required="true"/>
                             </div>
-                            <p:message for="uf"/>
                         </div>
                     </div>
 
-
+                    <!-- CARGO -->
                     <div class="input-group">
                         <label class="input-label" for="registerForm:cargo">Cargo</label>
                         <div class="input-container">
@@ -167,52 +208,72 @@
                                              value="#{registerBean.cargo}"
                                              styleClass="auth-input"
                                              required="true"
-                                             appendTo="@(body)"> <f:selectItem itemLabel="Selecione um cargo..."
-                                                                               itemValue="" noSelectionOption="true"/>
+                                             appendTo="@(body)">
+                                <f:selectItem itemLabel="Selecione um cargo..."
+                                              itemValue=""
+                                              noSelectionOption="true"/>
                                 <f:selectItem itemLabel="Operacional" itemValue="OPERATIONAL"/>
                                 <f:selectItem itemLabel="Moderador" itemValue="MOD"/>
                                 <f:selectItem itemLabel="Administrador" itemValue="ADMIN"/>
                             </p:selectOneMenu>
                         </div>
-                        <p:message for="cargo"/>
                     </div>
 
+                    <!-- SENHAS com validação -->
                     <div class="input-group">
                         <label class="input-label" for="registerForm:password">Senha</label>
                         <div class="input-container">
-                            <p:password id="password" value="#{registerBean.password}" styleClass="auth-input"
-                                        required="true"/>
+                            <p:password id="password"
+                                        value="#{registerBean.password}"
+                                        styleClass="auth-input"
+                                        required="true">
+                                <p:ajax event="blur"
+                                        update="password-status"
+                                        process="@this"/>
+                            </p:password>
                         </div>
-                        <p:message for="password"/>
+                        <h:panelGroup id="password-status">
+                            <h:outputText value="❌ Senha deve ter pelo menos 8 caracteres"
+                                          style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                          rendered="#{registerBean.passwordInvalid}"/>
+                        </h:panelGroup>
                     </div>
 
                     <div class="input-group">
                         <label class="input-label" for="registerForm:confirmPassword">Confirmar senha</label>
                         <div class="input-container">
-                            <p:password id="confirmPassword" value="#{registerBean.confirmPassword}"
-                                        styleClass="auth-input" required="true"/>
+                            <p:password id="confirmPassword"
+                                        value="#{registerBean.confirmPassword}"
+                                        styleClass="auth-input"
+                                        required="true">
+                                <p:ajax event="blur"
+                                        update="confirm-password-status"
+                                        process="password confirmPassword"/>
+                            </p:password>
                         </div>
-                        <p:message for="confirmPassword"/>
+                        <h:panelGroup id="confirm-password-status">
+                            <h:outputText value="❌ As senhas não coincidem"
+                                          style="font-size: 0.6rem; color: #f87171; display: block; margin-top: 0.3rem;"
+                                          rendered="#{registerBean.confirmPasswordInvalid}"/>
+                        </h:panelGroup>
                     </div>
                 </div>
 
-                <p:commandButton id="buscarCepCommand"
-                                 action="#{registerBean.buscarCep}"
-                                 update="registerForm:rua registerForm:bairro registerForm:cidade registerForm:uf"
-                                 style="display: none"/>
-
+                <!-- BOTÃO DE REGISTRO -->
                 <p:commandButton value="Criar conta"
                                  action="#{registerBean.register}"
                                  styleClass="login-btn"
                                  update="@form"
                                  process="@form"/>
 
+                <!-- LINK PARA LOGIN -->
                 <h:link value="Já tenho uma conta"
                         styleClass="register-link"
                         outcome="login"/>
             </h:form>
         </div>
 
+        <!-- IMAGEM -->
         <div class="picture-section">
             <h:graphicImage library="img"
                             name="bg.jpg"
@@ -220,37 +281,6 @@
                             alt="Background"/>
         </div>
     </div>
-
-    <script type="text/javascript">
-        function formatarCep(input) {
-            let cep = input.value.replace(/\D/g, '');
-            if (cep.length > 5) {
-                cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
-            }
-            input.value = cep;
-        }
-
-        function buscarCepAutomatico() {
-            const cepInput = document.getElementById('registerForm:cep');
-            const cep = cepInput.value.replace(/\D/g, '')
-
-            if (cep.length === 8) {
-                document.getElementById('registerForm:buscarCepCommand').click();
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const cepField = document.getElementById('registerForm:cep');
-            if (cepField) {
-                cepField.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        buscarCepAutomatico();
-                    }
-                });
-            }
-        });
-    </script>
 
 </h:body>
 </html>

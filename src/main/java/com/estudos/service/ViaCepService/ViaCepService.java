@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 public class ViaCepService implements IViaCepService {
 
-    private static final String VIACEP_URL = "https://viacep.com.br/ws/";
+    private static final String VIACEP_URL = "https://viacep.com.br/ws";
     private static final Pattern CEP_PATTERN = Pattern.compile("^\\d{8}$");
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(ViaCepService.class);
@@ -39,15 +39,21 @@ public class ViaCepService implements IViaCepService {
             Client client = ClientBuilder.newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS).build();
 
             try {
-                String url = String.format("%s%s/json/", VIACEP_URL, cepLimpo);
+                String url = String.format("%s/%s/json", VIACEP_URL, cepLimpo);
+                System.out.println("URL: " + url); // Debug
 
                 Response response = client.target(url).request(MediaType.APPLICATION_JSON).get();
+
+                System.out.println("Status: " + response.getStatus());
 
                 if (response.getStatus() != 200) {
                     return ApiResponseDto.error("Erro ao consultar ViaCEP", response.getStatus());
                 }
 
                 String jsonResponse = response.readEntity(String.class);
+
+                System.out.println("JSON: " + jsonResponse);
+
                 ViaCepResponseDto viaCepResponse = objectMapper.readValue(jsonResponse, ViaCepResponseDto.class);
 
                 if (viaCepResponse.hasError()) {
